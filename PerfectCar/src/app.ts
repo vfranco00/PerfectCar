@@ -3,6 +3,7 @@ import 'express-async-errors';
 import { StatusCodes } from 'http-status-codes';
 import errorMiddleware from './middleware/errorMiddleware';
 import driverRouter from './routes/driversRouter';
+import carRouter from './routes/carRouter';
 
 class App {
     public app: express.Express;
@@ -15,6 +16,7 @@ class App {
       // Não remover essa rota
       this.app.get('/', (req, res) => res.json({ ok: true }));
       this.app.use('/drivers', driverRouter);
+      this.app.use('/cars', carRouter);
     }
   
     private config():void {

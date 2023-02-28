@@ -1,6 +1,6 @@
 import { Model, STRING, INTEGER } from 'sequelize';
 import db from '.';
-import Driver from './drivers';
+// import Driver from './drivers';
 
 class Car extends Model {
   id!: number;

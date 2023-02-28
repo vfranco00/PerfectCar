@@ -29,4 +29,26 @@ export default class CarService {
         const allCars = await this.model.findAll({});
         return allCars;
     }
+
+    public async deleteCar(id: string): Promise<boolean> {
+        const carIdFound = await this.model.findByPk(id);
+        if (carIdFound !== null) {
+            const carUpdate = carIdFound.destroy();
+            console.log(carUpdate, 'driver return');
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public async getCarById(id: string): Promise<Car[]> {
+        const carFound = await this.model.findByPk(id);
+        if (carFound === null) {
+            console.log('Not Found');
+            return [];
+        } else {
+            console.log(carFound);
+            return [carFound];
+        }
+    }
 }

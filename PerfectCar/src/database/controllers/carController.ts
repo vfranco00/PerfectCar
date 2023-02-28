@@ -34,4 +34,32 @@ export default class CarController {
     const allCars = await this.carService.getAllCars();
     res.status(200).json(allCars);
   }
+
+  public deleteCar = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const deletedCar = await this.carService.deleteCar(id);
+      if (!deletedCar) {
+        res.status(404).json({ message: 'Car dont exists' })
+      } else {
+        return res.status(200).json({ message: 'Car was deleted' })
+      }
+    } catch(error) {
+      next(error)
+    }
+  }
+
+  public getCarById = async (req: Request, res: Response, next: NextFunction) => {
+    try{
+      const { id } = req.params;
+      const carResult = await this.carService.getCarById(id);
+      if (carResult.length === 0) {
+        return res.status(404).json({ message: 'Car not Found' })
+      } else {
+        return res.status(200).json(carResult);
+      }
+    } catch (error) {
+      next(error)
+    }
+  }
 }

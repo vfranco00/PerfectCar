@@ -22,7 +22,11 @@ export default class DriverController {
     try{
       const { id } = req.params;
       const driverResult = await this.driverService.getDriverById(id);
-      return res.status(200).json(driverResult);
+      if (driverResult.length === 0) {
+        return res.status(404).json({ message: 'Driver not Found' })
+      } else {
+        return res.status(200).json(driverResult);
+      }
     } catch (error) {
       next(error)
     }
@@ -33,9 +37,27 @@ export default class DriverController {
       const { id } = req.params;
       const { name } = req.body;
       const updatedDriver = await this.driverService.updateDriver(id, name);
-      return res.status(200).json(updatedDriver);
+      if (updatedDriver.length === 0) {
+        return res.status(404).json({ message: 'Driver dont exists to be updated' });
+      } else {
+        return res.status(200).json(updatedDriver);
+      }
     } catch (error) {
       next(error);
+    }
+  }
+
+  public deleteDriver = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const deletedDriver = await this.driverService.deleteDriver(id);
+      if (!deletedDriver) {
+        res.status(404).json({ message: 'Driver dont exists' })
+      } else {
+        return res.status(200).json({ message: 'Driver was deleted' })
+      }
+    } catch(error) {
+      next(error)
     }
   }
 }

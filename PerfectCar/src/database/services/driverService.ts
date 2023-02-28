@@ -36,4 +36,15 @@ export default class DriverService {
             return [];
         }
     }
+
+    public async deleteDriver(id: string): Promise<boolean> {
+        const driverFoundId = await this.model.findByPk(id);
+        if (driverFoundId !== null) {
+            const driverUpdate = driverFoundId.destroy();
+            console.log(driverUpdate, 'driver return');
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

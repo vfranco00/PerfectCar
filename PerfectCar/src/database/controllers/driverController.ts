@@ -27,4 +27,15 @@ export default class DriverController {
       next(error)
     }
   }
+
+  public driverUpdate = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const { name } = req.body;
+      const updatedDriver = await this.driverService.updateDriver(id, name);
+      return res.status(200).json(updatedDriver);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

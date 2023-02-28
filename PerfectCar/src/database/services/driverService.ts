@@ -24,4 +24,16 @@ export default class DriverService {
             return [driverFound];
         }
     }
+
+    public async updateDriver(id: string, name: string): Promise<Driver[]> {
+        const driverFoundId = await this.model.findByPk(id);
+        if (driverFoundId !== null) {
+            const driverUpdate = driverFoundId.set({ name: `${name}` });
+            await driverUpdate.save();
+            console.log(driverUpdate);
+            return [driverUpdate];
+        } else {
+            return [];
+        }
+    }
 }

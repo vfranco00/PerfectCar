@@ -9,6 +9,22 @@ export default class CarService {
         return newCar;
     }
 
+    public async updateCar(id: string, plate: string, color: string, brand: string): Promise<Car[]> {
+        const carFoundId = await this.model.findByPk(id);
+        if (carFoundId !== null) {
+            const carUpdate = carFoundId.set({
+                plate: `${plate}`,
+                color: `${color}`,
+                brand: `${brand}`,
+            });
+            await carUpdate.save();
+            console.log(carUpdate);
+            return [carUpdate];
+        } else {
+            return [];
+        }
+    }
+
     public async getAllCars(): Promise<Car[]> {
         const allCars = await this.model.findAll({});
         return allCars;

@@ -13,4 +13,26 @@ export default class DriverService {
         const drivers = await this.model.findAll({});
         return drivers;
     }
+
+    /*public async getDriverById(id: string): Promise<Driver[]> {
+        const driver = await this.model.findAll({ where: { id: `${id}` } });
+        return driver;
+        if (driver === null) {
+            console.log('Not Found');
+        } else {
+            console.log(driver);
+            return driver;
+        }
+    }*/
+
+    public async getDriverById(id: string): Promise<Driver[]> {
+        const driverFound = await this.model.findByPk(id);
+        if (driverFound === null) {
+            console.log('Not Found');
+            return [];
+        } else {
+            console.log(driverFound);
+            return [driverFound];
+        }
+    }
 }
